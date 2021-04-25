@@ -8,7 +8,7 @@
         <% connection = PG::connect(dbname: "goya") %>
         <% connection.internal_encoding = "UTF-8" %>
        
-        <% result1 = connection.exec("select weight, give_for from crops;") %>
+        <% result1 = connection.exec("select weight, give_for from crops where give_for != '自家消費';") %>
         <% data1 = [] %>
         <% result1.each do |record| %>
           <%  data1 << "Bitter gourd size :#{record["weight"]}　Sold to :#{record["give_for"]}" %>
