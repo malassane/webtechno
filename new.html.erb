@@ -1,40 +1,38 @@
 <html>
-    <head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    </head>
-    <body>
-      <h1> Excercices Series Web Technology </h1>
-        <% require 'pg' %>
-        <% connection = PG::connect(dbname: "goya") %>
-        <% connection.internal_encoding = "UTF-8" %>
-       
-        <% result1 = connection.exec("select weight, give_for from crops where give_for != '自家消費';") %>
-        <% data1 = [] %>
-        <% result1.each do |record| %>
-          <%  data1 << "Bitter gourd size :#{record["weight"]}　Sold to :#{record["give_for"]}" %>
-        <% end %>
+  </head>
+  <body>
+    <h1> Excercices Series Web Technology </h1>
+    <% require 'pg' %>
+    <% connection = PG::connect(dbname: "goya") %>
+    <% connection.internal_encoding = "UTF-8" %>
+    <% result1 = connection.exec("select weight, give_for from crops where give_for != '自家消費';") %>
+    <% data1 = [] %>
+    <% result1.each do |record| %>
+      <%  data1 << "Bitter gourd size :#{record["weight"]}　Sold to :#{record["give_for"]}" %>
+    <% end %>
 
-        <form action="page1.cgi" method="POST">
+    <form action="page1.cgi" method="POST">
             Click the button below to jump to the page with GOYA information <br><br>
             <input type="text"  name="input" value = "<%= data1.join('') %>">
             <br>
             <input type="submit" name="ENTER" >
-        </form>
+    </form>
       
-      <% result2 = connection.exec("select weight, give_for from crops where quality = false;") %>
-      <% data2 = [] %>
-      <% result2.each do |record| %>
-        <%  data2 << "Bitter gourd size :#{record["weight"]}　Sold to :#{record["give_for"]}" %>
-      <% end %>
+    <% result2 = connection.exec("select weight, give_for from crops where quality = false;") %>
+    <% data2 = [] %>
+    <% result2.each do |record| %>
+      <%  data2 << "Bitter gourd size :#{record["weight"]}　Sold to :#{record["give_for"]}" %>
+    <% end %>
 
-      <form action="goya.cgi" method="POST">
+    <form action="goya.cgi" method="POST">
         Click the button below to jump to the page with GOYA information of  poor quality<br><br>
          <!-- value is the data you want to send. -->
          <!-- name="goya" as a marker of information.-->
         <input type="text" name="goya" value="<%= data2.join('') %>"> 
         <br>
         <input type="submit" name="transmission" >
-      </form>
-      
-    </body>
-  </html>
+    </form>
+  </body>
+</html>
